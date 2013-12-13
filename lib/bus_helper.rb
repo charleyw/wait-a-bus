@@ -9,7 +9,7 @@ class BusHelper
     city = query.sub(/#{bus_num}.*/, '').strip
     city = "西安" if city.empty?
     bus_lines_results = @ai_bang_client.bus_lines(city, bus_num)
-    result = "";
+    result = ''
     bus_lines_results.each do |line|
       running_time = line["info"].scan(/\d{1,2}[:：]\d{1,2}-{1,2}\d{1,2}[:：]\d{1,2}/)[0]
       result += line["name"] + " " + running_time + "\n\n" if !running_time.nil?
@@ -18,6 +18,14 @@ class BusHelper
   end
 
   def bus_lines(city, bus_num)
-    bus_lines_results = @ai_bang_client.bus_lines(city, bus_num)
+    results = @ai_bang_client.bus_lines(city, bus_num)
+    results.collect do |line|
+      {
+          :title => line['name'],
+          :description => '',
+          :picture_url => '',
+          :url => ''
+      }
+    end
   end
 end

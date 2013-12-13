@@ -32,11 +32,14 @@ describe 'app' do
     user.open_id = 'test'
     user.city = 'xian'
 
+    mocked_response = [{:title=>"6路(怡园路北口-火车站西)", :description=>"", :picture_url=>"", :url=>""}, {:title=>"6路(火车站西-怡园路北口)", :description=>"", :picture_url=>"", :url=>""}, {:title=>"游6(唐苑-火车站)", :description=>"", :picture_url=>"", :url=>""}, {:title=>"游6(火车站-唐苑)", :description=>"", :picture_url=>"", :url=>""}, {:title=>"机场大巴6号线(咸阳机场-彩虹宾馆)", :description=>"", :picture_url=>"", :url=>""}, {:title=>"机场大巴6号线(彩虹宾馆-咸阳机场)", :description=>"", :picture_url=>"", :url=>""}]
     User.should_receive(:where).with(open_id: 'fromUser'){user}
+    BusHelper.any_instance.should_receive(:bus_lines).with('xian','this is a test'){mocked_response}
 
     post '/', TEXT_MESSAGE_REQUEST, 'CONTENT_TYPE' => 'text/xml'
     last_response.body.should include '<ToUserName><![CDATA[fromUser]]></ToUserName>'
-    last_response.body.should include '<Content><![CDATA[bus lines]]></Content>'
+    last_response.body.should include '<Title><![CDATA[6路(怡园路北口-火车站西)]]></Title>'
+    last_response.body.should include '<Title><![CDATA[6路(火车站西-怡园路北口)]]></Title>'
   end
 
 end
