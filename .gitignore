@@ -1,0 +1,6 @@
+.DS_Store
+.idea
+*.pid
+tmp
+log
+wei-backend*.gem
