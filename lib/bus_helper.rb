@@ -16,4 +16,8 @@ class BusHelper
     end
     result
   end
+
+  def bus_lines(city, bus_num)
+    bus_lines_results = @ai_bang_client.bus_lines(city, bus_num)
+  end
 end
