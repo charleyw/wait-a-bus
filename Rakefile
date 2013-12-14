@@ -1,5 +1,6 @@
 require 'sinatra/activerecord/rake'
 require './init'
+load 'tasks/db.rake'
 
 namespace :dev do
   desc 'start application in local env'

@@ -10,11 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211150124) do
+ActiveRecord::Schema.define(version: 20131214011424) do
+
+  create_table "cities", force: true do |t|
+    t.string "name"
+  end
 
   create_table "users", force: true do |t|
-    t.string "open_id"
-    t.string "city"
+    t.string  "open_id"
+    t.integer "city_id"
   end
 
 end
