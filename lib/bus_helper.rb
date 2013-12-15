@@ -25,19 +25,35 @@ class BusHelper
 
   def format_results(results)
     formatted_results = []
-    formatted_results << {
-        :title => "共#{results.length}条公交线路",
-        :description => '',
-        :picture_url => '',
-        :url => ''
-    }
-    results.collect do |line|
+    if results.length == 1
+      line = results[0]
       formatted_results << {
           :title => line['name'],
           :description => line['info'],
           :picture_url => '',
           :url => ''
       }
+      formatted_results << {
+          :title => '查看全部站点',
+          :description => '',
+          :picture_url => '',
+          :url => ''
+      }
+    else
+      formatted_results << {
+          :title => "共#{results.length}条公交线路",
+          :description => '',
+          :picture_url => '',
+          :url => ''
+      }
+      results.collect do |line|
+        formatted_results << {
+            :title => line['name'],
+            :description => line['info'],
+            :picture_url => '',
+            :url => ''
+        }
+      end
     end
     formatted_results
   end
