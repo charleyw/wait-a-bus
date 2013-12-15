@@ -6,8 +6,8 @@ class ServiceDispatcher
 
   def service(user_name, request)
     user = User.where(open_id: user_name).first
-
-    return on_set_city(user_name, city) if city = City.where(name: request).first
+    city = City.where(name: request).first
+    return on_set_city(user_name, city) if city
     return '请告诉我你所在的城市（如，西安），我好为您继续服务' unless enable_to_serve(user)
     return on_direction_search(user, places[0], places[1]) if (places = request.split('到').length == 2)
     on_bus_line_search(user, request)
