@@ -1,0 +1,19 @@
+#bus-line.typo
+  %table
+    %thead
+      %tr
+        %th= name
+    %tbody
+      %tr
+        %th= info
+
+  %table
+    %thead
+      %tr
+        %th 站点名称
+    %tbody
+      - stats.each do |stat|
+        %tr
+          %th= stat
+
+

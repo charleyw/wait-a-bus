@@ -20,10 +20,10 @@ class BusHelper
   def bus_lines(city, bus_num)
     results = @ai_bang_client.bus_lines(city, bus_num)
     merged_results = merge_return_lines(results)
-    format_results(merged_results)
+    format_results(city, merged_results)
   end
 
-  def format_results(results)
+  def format_results(city, results)
     formatted_results = []
     if results.length == 1
       line = results[0]
@@ -31,13 +31,13 @@ class BusHelper
           :title => line['name'],
           :description => line['info'],
           :picture_url => '',
-          :url => ''
+          :url => "#{CONFIG[:url]}/bus/#{URI.encode city}/#{URI.encode line['name']}"
       }
       formatted_results << {
           :title => '查看全部站点',
           :description => '',
           :picture_url => '',
-          :url => ''
+          :url => "#{CONFIG[:url]}/bus/#{URI.encode city}/#{URI.encode line['name']}"
       }
     else
       formatted_results << {
@@ -51,7 +51,7 @@ class BusHelper
             :title => line['name'],
             :description => line['info'],
             :picture_url => '',
-            :url => ''
+            :url => "#{CONFIG[:url]}/bus/#{URI.encode city}/#{URI.encode line['name']}"
         }
       end
     end

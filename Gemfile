@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'http://ruby.taobao.org'
 
 gem 'thin'
 gem 'hash_validator'
