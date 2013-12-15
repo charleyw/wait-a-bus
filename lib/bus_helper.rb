@@ -34,7 +34,7 @@ class BusHelper
           :url => "#{CONFIG[:url]}/bus/#{URI.encode city}/#{URI.encode line['name']}"
       }
       formatted_results << {
-          :title => '查看全部站点',
+          :title => line['info'],
           :description => '',
           :picture_url => '',
           :url => "#{CONFIG[:url]}/bus/#{URI.encode city}/#{URI.encode line['name']}"
