@@ -19,13 +19,59 @@ class BusHelper
 
   def bus_lines(city, bus_num)
     results = @ai_bang_client.bus_lines(city, bus_num)
-    results.collect do |line|
-      {
+    merged_results = merge_return_lines(results)
+    format_results(merged_results)
+  end
+
+  def format_results(results)
+    formatted_results = []
+    if results.length == 1
+      line = results[0]
+      formatted_results << {
           :title => line['name'],
+          :description => line['info'],
+          :picture_url => '',
+          :url => ''
+      }
+      line['stats'].split(';').each do |stat|
+        formatted_results << {
+            :title => stat,
+            :description => '',
+            :picture_url => '',
+            :url => ''
+        }
+
+      end
+    else
+      formatted_results << {
+          :title => "共#{results.length}条公交线路",
           :description => '',
           :picture_url => '',
           :url => ''
       }
+      results.collect do |line|
+        formatted_results << {
+            :title => line['name'],
+            :description => '',
+            :picture_url => '',
+            :url => ''
+        }
+      end
+    end
+    formatted_results
+  end
+
+  def merge_return_lines(results)
+    line_names = []
+
+    results.reject! do |line|
+      line_name_without_stat_name = line['name'].scan(/.*(?=\(.*\))/)[0]
+      if line_names.include? line_name_without_stat_name
+        false
+      else
+        line_names << line_name_without_stat_name
+        true
+      end
     end
   end
 end

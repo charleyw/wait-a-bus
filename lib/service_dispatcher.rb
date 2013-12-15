@@ -5,10 +5,10 @@ class ServiceDispatcher
   end
 
   def service(user_name, request)
-    city = City.where(name: request).first
-    return on_set_city(user_name, city) unless city.nil?
-    return '请告诉我你所在的城市（如，西安），或者给我分享一下您的位置，我好为您继续服务' unless enable_to_serve(user_name)
     user = User.where(open_id: user_name).first
+
+    return on_set_city(user_name, city) if city = City.where(name: request).first
+    return '请告诉我你所在的城市（如，西安），或者给我分享一下您的位置，我好为您继续服务' unless enable_to_serve(user)
     return on_direction_search(user, places[0], places[1]) if (places = request.split('到').length == 2)
     on_bus_line_search(user, request)
   end
@@ -33,12 +33,10 @@ class ServiceDispatcher
     "您设置默认城市为：#{city.name}"
   end
 
-  def enable_to_serve(user_name)
-    user = User.where(open_id: user_name).first
-    enableServe = true
-    user = User.create(open_id: user_name) if user.nil?
-    enableServe = false if user.city_id.nil?
-    enableServe
+  def enable_to_serve(user)
+    return false if user.nil?
+    return false if user.city_id.nil?
+    true
   end
 
 end
