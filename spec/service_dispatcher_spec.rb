@@ -1,13 +1,13 @@
 require_relative 'spec_helper'
 
 describe 'service dispatcher' do
-  it 'should ask user city info when user search 1st time' do
+  xit 'should ask user city info when user search 1st time' do
     User.should_receive(:where){[]}
     User.should_receive(:create){User.new}
     ServiceDispatcher.new.enable_to_serve('fromUser').should == false
   end
 
-  it 'should update user city info when receive city name' do
+  xit 'should update user city info when receive city name' do
     xian = City.new(id:1, name:'西安')
     user = User.new
 
